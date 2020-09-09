@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<main>
+    <form action="" method="post">
+    <p>Это поле скрыто: <input type="hidden" name="hidden1" value=""></p>
+    <p>Это поле для паролей: <input type="password" name="password1" value=""></p>
+    <p>Radio1: <input type="radio" name="group1" checked="checked">
+    Radio2: <input type="radio" name="group1"></p>
+    <select name="select1">
+        <option value="value1">Text1</option>
+        <option value="value2">Text2</option>
+        <option value="value3">Text3</option>
+    </select>
+    <br>
+    <br>
+    <select multiple="multiple" name="multipleselect">
+        <option value="value1">Text1</option>
+        <option value="value2">Text2</option>
+        <option value="value3">Text3</option>
+    </select>
+    <p>Кнопка подтвердить: <input type="submit" name="submit1" value="Submit">
+    <p>Текст: <input type="text" name="text1" value=" ">
+    <p>Область текста: <textarea name="textArea1" rows="4" cols="10"></textarea></p>
+
+<fieldset>
+    <legend>Заголовок формы</legend>
+    <p>
+        <label>
+            E-mail: <input type="email" name="email" title="Формат данных неправельный">
+        </label>
+    </p>
+    <p>
+        <label>
+            Web-site: <input type="url" name="url" title="Формат данных неправельный">
+        </label>
+    </p>
+    <p>
+        <label>
+            Tel: <input type="tel" name="phone" >
+        </label>
+    </p>
+</fieldset>
+        <p>
+            <label>
+                <input type="submit" name="Submit" value="Submit">
+            </label>
+        </p>
+    </form>
+
+    <form>
+        <p>
+            <label>
+                Data and time: <input type="datetime-local" name="dateAndtime">
+            </label>
+        </p>
+        <p>
+            <label>
+                Data: <input type="date" name="date" min="2011-03-15" max="2012-03-14">
+            </label>
+        </p>
+        <p>
+            <label>
+                Time: <input type="time" name="time" min="08:00" max="18:00">
+            </label>
+        </p>
+        <p>
+            <input type="submit" value="Send">
+        </p>
+    </form>
+
+    <form>
+        <p>
+            <label>
+                Number: <input type="number" name="number">
+            </label>
+
+        </p>
+        <p>
+            <input type="submit" value="Send">
+        </p>
+    </form>
+
+    <form>
+        <p>
+            <label>
+                Number: <input type="number" name="number" min="2" max="20" step="2">
+            </label>
+
+        </p>
+        <p>
+            <input type="submit" value="Send">
+        </p>
+    </form>
+
+    <form>
+        <p>
+            <label>
+                Volume: <input type="range" name="volume" min="2" max="10" step="1" value="5">
+            </label>
+
+        </p>
+    </form>
+
+    <form>
+        <p>
+            <label>
+                BG color: <input type="color" name="bg">
+            </label>
+        </p>
+        <p>
+            <label>
+                Font color: <input type="color" name="fg">
+            </label>
+        </p><p>
+        <label>
+            <input type="submit" value="Submit">
+        </label>
+    </p>
+    </form>
+
+    <form>
+        <p>
+            <label>
+                Sum: <input type="text" name="donat" list="donat">
+            </label>
+        </p>
+        <datalist id="donat">
+            <option value="10.00">10.00$</option>
+            <option value="20.00">20.00$</option>
+            <option value="30.00">30.00$</option>
+        </datalist>
+        <p>
+            <input type="submit" value="Submit">
+        </p>
+
+    </form>
+    <form>
+        <fieldset>
+            <legend>Авторизация</legend>
+            <p>
+                <label>
+                    Login: <input type="text" name="login" required="required">
+                </label>
+            </p>
+            <p>
+                <label>
+                    Password: <input type="password" name="pwd" required="required">
+                </label>
+            </p>
+            <p>
+                <label>
+                    <input type="submit" value="Submit">
+                </label>
+            </p>
+        </fieldset>
+    </form>
+
+    <form>
+        <p>
+            <label>
+                First field: <input type="search" name="query">
+            </label>
+        </p>
+        <label>
+            Second field with autofocus: <input type="search" name="query" autofocus="autofocus">
+        </label>
+        <p>
+            <input type="submit" value="Submit">
+        </p>
+    </form>
+    <fieldset>
+        <legend>Заголовок формы</legend>
+        <p>
+            <label>
+                E-mail: <input type="email" name="email2" placeholder="user@domain.com">
+            </label>
+        </p>
+        <p>
+            <label>
+                Web-site: <input type="url" name="url2" placeholder="https:example.com">
+            </label>
+        </p>
+        <p>
+            <label>
+                Tel: <input type="tel" name="phone2" placeholder="123-45-67">
+            </label>
+        </p>
+        <p>
+            <label>
+                <input type="submit" value="Submit">
+            </label>
+        </p>
+    </fieldset>
+
+<form>
+    <p>
+        <label>
+            Tel: <input type="tel" name="phone3" pattern="\+372 \(\d{3}\) \d{3}-\d{2}-\d{2}">
+        </label>
+    </p>
+    <p>
+        <label>
+            <input type="submit" value="Submit">
+        </label>
+    </p>
+</form>
+</main>
+</body>
+</html>

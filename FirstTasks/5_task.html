@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="http://maps.google.com/maps/api/js?sensor=true"></script>
+</head>
+<body>
+<div id="First">
+    <h1>Geolocation API</h1>
+    <p id="sup"></p>
+    <script>
+        function checkSupport() {
+            let sup = document.getElementById("sup")
+            if (navigator.geolocation) {
+                sup.innerHTML = "Your browser support geolocation";
+            }
+            else{
+                sup.innerHTML = "Your browser do NOT support geolocation";
+            }
+        }
+        window.addEventListener("load", checkSupport, true);
+    </script>
+</div>
+
+<div id="Second">
+    <table style="border: 3px solid black; padding: 10px; border-collapse: collapse;">
+        <tr><td>Latitude</td><td> <p id="Latitude"></p> </td></tr>
+        <tr><td>Longitude</td><td> <p id="Longitude"></p> </td></tr>
+        <tr><td>Accuracy</td><td> <p id="Accuracy"></p> </td></tr>
+        <tr><td>Altitude</td><td> <p id="Altitude"></p> </td></tr>
+        <tr><td>AltitudeAccuracy</td><td> <p id="AltitudeAccuracy"></p> </td></tr>
+        <tr><td>Heading</td><td> <p id="Heading"></p> </td></tr>
+        <tr><td>Speed</td><td> <p id="Speed"></p> </td></tr>
+    </table>
+
+    <p id="status"></p>
+
+    <script>
+        "use strict";
+        navigator.geolocation.getCurrentPosition(updateLocation, handleError);
+
+        function updateLocation(position) {
+            let $ = function (selector) {
+                return document.getElementById(selector);
+            }
+            $('Latitude').innerHTML = position.coords.latitude;
+            $('Longitude').innerHTML = position.coords.longitude;
+            $('Accuracy').innerHTML = position.coords.accuracy;
+            $('Altitude').innerHTML = position.coords.altitude;
+            $('AltitudeAccuracy').innerHTML = position.coords.altitudeAccuracy;
+            $('Heading').innerHTML = position.coords.heading;
+            $('Speed').innerHTML = position.coords.speed;
+        }
+
+        function handleError(error) {
+            switch (error.code) {
+                case 0:
+                    updateStatus('При попытке определить местонахождение возникала ошибка: ' + error.message);
+                    break
+                case 1:
+                    updateStatus('Пользователь запретил получение данных о местонахождении.');
+                    break
+                case 2:
+                    updateStatus('Браузеру не удалось определить местоположение: ' + error.message);
+                    break
+                case 3:
+                    updateStatus('Истекло время ожидания');
+                    break
+            }
+        }
+
+        function updateStatus(message) {
+            document.getElementById("status").innerHTML = message;
+        }
+    </script>
+</div>
+
+<div id="Third">
+    <button id="get">Get location</button>
+    <table style="border: 3px solid black; padding: 10px; border-collapse: collapse;">
+        <tr><td>Latitude</td><td> <p id="latitude1"></p> </td></tr>
+        <tr><td>Longitude</td><td> <p id="longitude1"></p> </td></tr>
+        <tr><td>Accuracy</td><td> <p id="accuracy1"></p> </td></tr>
+    </table>
+    <p id="status1"></p>
+
+    <img id="loader" src="loader.gif" alt=""/>
+    <script>
+        "use strict";
+
+        document.getElementById('get').onclick = function(){
+            showLoadStatus();
+        }
+
+        navigator.geolocation.getCurrentPosition(updateLocation, handleError, {enableHighAccuracy: true, timeout: 10000, maximumAge: 30000});
+
+        function updateLocation(position) {
+            let $ = function (selector) {
+                return document.getElementById(selector);
+            }
+            $('latitude1').innerHTML = position.coords.latitude;
+            $('longitude1').innerHTML = position.coords.longitude;
+            $('accuracy1').innerHTML = position.coords.accuracy;
+            
+            hideLoadStatus();
+        }
+
+        function handleError(error) {
+            switch (error.code) {
+                case 0:
+                    updateStatus('При попытке определить местонахождение возникала ошибка: ' + error.message);
+                    break
+                case 1:
+                    updateStatus('Пользователь запретил получение данных о местонахождении.');
+                    break
+                case 2:
+                    updateStatus('Браузеру не удалось определить местоположение: ' + error.message);
+                    break
+                case 3:
+                    updateStatus('Истекло время ожидания');
+                    break
+            }
+            hideLoadStatus();
+        }
+
+        function updateStatus(message) {
+            document.getElementById("status").innerHTML = message;
+        }
+        
+        function showLoadStatus() {
+            document.getElementById("loader").style.visibility = "visible"
+        }
+        
+        function hideLoadStatus() {
+            document.getElementById("loader").style.visibility = "hidden"
+        }
+    </script>
+</div>
+
+
+
+
+<div id="Fourth">
+    <button id="start">Start</button>
+    <button id="stop">Stop</button>
+    <table id="infoTable" style="border: 3px solid black; padding: 10px; border-collapse: collapse;">
+        <tr><td>Latitude</td><td> <p id="Latitude2"></p> </td></tr>
+        <tr><td>Longitude</td><td> <p id="Longitude2"></p> </td></tr>
+        <tr><td>Accuracy</td><td> <p id="Accuracy2"></p> </td></tr>
+        <tr><td>Altitude</td><td> <p id="Altitud2"></p> </td></tr>
+        <tr><td>AltitudeAccuracy</td><td> <p id="AltitudeAccuracy2"></p> </td></tr>
+        <tr><td>Heading</td><td> <p id="Heading2"></p> </td></tr>
+        <tr><td>Speed</td><td> <p id="Speed2"></p> </td></tr>
+    </table>
+
+    <p id="status2"></p>
+
+    <script>
+        "use strict";
+
+        if (window.addEventListener) window.addEventListener("load", function () {
+            document.getElementById("start").onclick = startWatch;
+            document.getElementById("stop").onclick = stopWatch;
+        }, true);
+
+        let watchId;
+
+        function startWatch(){
+            watchId = navigator.geolocation.watchPosition(updateLocation, handleError, {maximumAge: 1000});
+        }
+
+        function stopWatch() {
+            navigator.geolocation.clearWatch(watchId)
+        }
+
+        function updateLocation(position) {
+            let $ = function (selector) {
+                return document.getElementById(selector);
+            }
+            $('Latitude2').innerHTML = position.coords.latitude;
+            $('Longitude2').innerHTML = position.coords.longitude;
+            $('Accuracy2').innerHTML = position.coords.accuracy;
+            $('Altitude2').innerHTML = position.coords.altitude;
+            $('AltitudeAccuracy2').innerHTML = position.coords.altitudeAccuracy;
+            $('Heading2').innerHTML = position.coords.heading;
+            $('Speed2').innerHTML = position.coords.speed;
+        }
+
+        function handleError(error) {
+            switch (error.code) {
+                case 0:
+                    updateStatus('При попытке определить местонахождение возникала ошибка: ' + error.message);
+                    break
+                case 1:
+                    updateStatus('Пользователь запретил получение данных о местонахождении.');
+                    break
+                case 2:
+                    updateStatus('Браузеру не удалось определить местоположение: ' + error.message);
+                    break
+                case 3:
+                    updateStatus('Истекло время ожидания');
+                    break
+            }
+        }
+
+        function updateStatus(message) {
+            document.getElementById("status").innerHTML = message;
+        }
+    </script>
+</div>
+
+<div id="Fifth">
+    <div id="map" style="height: 300px; width: 600px"></div>
+    <p id="mes"></p>
+
+    <script>
+        navigator.geolocation.getCurrentPosition(updatePosition);
+
+        function updatePosition(pos) {
+            let position = new google.maps.LatLng(pos.coords.latitude,pos.coords.longitude);
+            document.getElementById('mes').innerHTML = "Позиция определена с точностью в " + pos.coords.accuracy + "метров.";
+
+            let options = {
+                zoom: 15,
+                center: position,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            }
+
+            let map = new google.maps.Map(document.getElementById("map"), options);
+
+            let marker = new google.maps.Marker({
+                position: position,
+                map: map,
+                title: "It's you"
+            });
+
+            let infowindow = new google.maps.InfoWindow({
+                content: "It is your position"
+            })
+
+            google.maps.event.addListener(marker, 'click', function () {
+                infowindow.open(map, marker);
+            })
+        }
+    </script>
+</div>
+</body>
+</html>

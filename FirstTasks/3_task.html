@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Audio element</title>
+    <script src="modernizr-custom.js"></script>
+
+    <style>
+        div{
+            margin-bottom: 30px;
+
+        }
+    </style>
+</head>
+<body>
+<div id="One">
+    <audio src="audio/Vivaldi.mp3" controls>
+        Browser can't open file
+    </audio>
+</div>
+
+<div id="Two">
+    <audio id="audio" controls autoplay src="audio/Vivaldi.ogg">
+        Browser can't open file
+    </audio>
+
+    <script>
+
+        if (! Modernizr.audio){
+            alert('Browser can\'t open file');
+        }
+        else{
+            let audio = document.getElementById("audio");
+            let res = audio.canPlayType('audio/ogg; codecs="vorbis"')
+            if (res) alert(res+"can play ogg vorbis");
+            else alert("No support for ogg vorbis")
+        }
+    </script>
+</div>
+
+<div id="Tree">
+    <audio controls>
+        <source src="audio/Vivaldi.mp3">
+        <source src="audio/Vivaldi.ogg">
+        <a href="vivaldi.com">Browser can't open file</a>
+    </audio>
+</div>
+
+<div id="Four">
+    <input id="playButton" type="button" value="play">
+    <audio id="audioElement">
+        <source src="audio/Vivaldi.mp3">
+        <source src="audio/Vivaldi.ogg">
+        <a href="vivaldi.com">Browser can't open file</a>
+    </audio>
+
+    <script>
+        document.getElementById("playButton").onclick = playSound;
+
+        function playSound() {
+            let music = document.getElementById("audioElement");
+            let button = document.getElementById("playButton");
+
+            if(music.paused){
+                music.play();
+                button.value = "stop";
+            }
+            else{
+                music.pause();
+                button.value = "play";
+
+            }
+        }
+    </script>
+</div>
+
+<div id="Five">
+    <audio id="audio1">
+        <source src="audio/Vivaldi.mp3">
+        <source src="audio/Vivaldi.ogg">
+        <a href="vivaldi.com">Browser can't open file</a>
+    </audio>
+    <button title="Play on 30s" onclick="playAt(30)">30s</button>
+    <script>
+        function playAt(seconds) {
+            let audio = document.getElementById("audio1");
+            audio.currentTime = seconds;
+            audio.play();
+        }
+    </script>
+
+    <button title="stop playing" onclick="stopAudio()">Stop</button>
+
+    <script>
+        function stopAudio() {
+            let audio = document.getElementById("audio1")
+            audio.currentTime = 0;
+            audio.pause();
+        }
+    </script>
+</div>
+
+<div id="Six">
+    <video controls loop poster="poster.png">
+        <source src="Mountains.mp4">
+        <a href="vivaldi.com">Browser can't open file</a>
+    </video>
+</div>
+
+<div id="Seven">
+    <video id="video"  style="border: 2px solid gray; cursor: pointer;">
+        <source src="Mountains.mp4">
+        <a href="vivaldi.com">Browser can't open file</a>
+    </video>
+
+    <script>
+        window.onload = function () {
+            let video = document.getElementById("video");
+
+            video.onmouseover = function () {
+                this.play();
+            }
+            video.onmouseout = function () {
+                this.pause();
+            }
+        }
+    </script>
+
+</div>
+
+<div id="Eight">
+    <button title="get preview" onclick="generatePreview()">Get preview</button>
+    <video id="origVideo" width="640" height="360" style="border: 1px solid grey">
+        <source src="Mountains.mp4">
+    </video>
+
+    <canvas id="previewMed" style="border: 1px solid grey"></canvas>
+    <canvas id="previewSm" style="border: 1px solid grey"></canvas>
+
+    <script>
+        function generatePreview() {
+            let video = document.getElementById("origVideo");
+            let canvas1 = document.getElementById('previewMed');
+            let context1 = canvas1.getContext('2d');
+            let canvas2 = document.getElementById('previewSm');
+            let context2 = canvas1.getContext('2d');
+
+            canvas1.width = 320;
+            canvas1.height = 180;
+            canvas2.width = 160;
+            canvas2.height = 90;
+
+            video.addEventListener('play', function () {
+                drawVideo(this, context1, context2);
+            }, false);
+
+            video.play();
+        }
+
+        function drawVideo(video, canvas1, canvas2) {
+            if (video.paused || video.ended){
+                return false;
+            }
+            canvas1.drawImage(video, 0, 0, 320, 180);
+            canvas2.drawImage(video, 0, 0, 160, 90);
+            setTimeout(drawVideo, 25, video, canvas1, canvas2);
+        }
+    </script>
+</div>
+
+<div id="Nine">
+
+<video id="video1" width="200" height="200" style="border: 2px solid grey">
+    <source src="Mountains.mp4">
+</video>
+
+    <button id="part1">1</button>
+    <button id="part2">2</button>
+    <button id="part3">3</button>
+
+    <button id="playBut">play</button>
+    <button id="pauseBut">pause</button>
+
+    <script>
+        window.onload = function () {
+            let v =  document.getElementById("video1");
+            let part = v.duration / 3;
+
+            document.getElementById("part1").onclick = function () {
+                v.currentTime = 0;
+            }
+            document.getElementById("part2").onclick = function () {
+                v.currentTime = part;
+            }
+            document.getElementById("part3").onclick = function () {
+                v.currentTime = part*2;
+            }
+            document.getElementById("playBut").onclick = function () {
+                v.play();
+            }
+            document.getElementById("pauseBut").onclick = function () {
+                v.pause();
+            }
+        }
+    </script>
+</div>
+</body>
+</html>

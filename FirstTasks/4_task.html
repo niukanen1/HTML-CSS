@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Drag&Drop</title>
+    <style>
+        #source {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            background-color: yellow;
+            padding: 5px;
+            width: 100px;
+            height: 100px;
+            cursor: move;
+            color: black;
+        }
+
+        #target {
+            background-color: blue;
+            width: 150px;
+            height: 150px;
+            padding: 5px;
+            margin-bottom: 5px;
+            color: white;
+        }
+    </style>
+
+    <script>
+        window.onload = function () {
+            let source = document.getElementById('source')
+
+            source.addEventListener('dragstart', function (evt) {
+                this.style.border = "3px dotted #000";
+                evt.dataTransfer.effectAllowed = "move";
+                evt.dataTransfer.setData("Text", this.id);
+            }, false);
+
+            source.addEventListener('dragend', function (evt) {
+                this.style.border = ""
+            }, false);
+
+            let target = document.getElementById("target");
+
+            target.addEventListener("dragenter", function (evt) {
+                this.style.border = "3px solid red";
+            }, false)
+
+            target.addEventListener("dragleave", function (evt) {
+                this.style.border = "";
+            }, false)
+
+            target.addEventListener("dragover", function (evt) {
+                if(evt.preventDefault) evt.preventDefault();
+                return false;
+            }, false)
+
+            target.addEventListener("drop", function (evt) {
+                if(evt.preventDefault) evt.preventDefault();
+                if (evt.stopPropagation) evt.stopPropagation();
+                this.style.border = "";
+
+                let id = evt.dataTransfer.getData("Text");
+                let elem = document.getElementById(id);
+                this.appendChild(elem);
+                return false;
+            }, false)
+
+        }
+    </script>
+
+</head>
+<body>
+<div id="source" draggable="true"> This element</div>
+
+<div id="target"> To this area</div>
+</body>
+</html>
